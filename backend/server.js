@@ -19,16 +19,6 @@ app.use(express.json());
 app.use('/student', express.static('public/student'));
 app.use('/admin', express.static('public/admin'));
 
-// Admin SPA fallback
-app.get('/admin/*', (req, res) => {
-  const adminPath = path.join(__dirname, 'public/admin/index.html');
-  if (fs.existsSync(adminPath)) {
-    res.sendFile(adminPath);
-  } else {
-    res.status(404).json({ message: 'Admin page not found' });
-  }
-});
-
 app.use('/', express.static('public/student'));  // Default to student portal
 
 // Routes
