@@ -1,6 +1,8 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
+const fs = require('fs');
 
 // File-based routes (no MongoDB!)
 const authRoutes = require('./routes/fileAuthRoutes');
@@ -52,9 +54,12 @@ app.use((req, res) => {
     return res.status(404).json({ message: 'Route not found' });
   }
   // For frontend routes, serve index.html (SPA fallback)
-  const path = require('path');
-  res.sendFile(path.join(__dirname, 'public/student/index.html'));
-});
+  const indexPath = path.join(__dirname, 'public/student/index.html');
+  if (fs.existsSync(indexPath)) {
+    res.sendFile(indexPath);
+  } else {
+    res.status(404).json({ message: 'Page not found' });
+  }
 });
 
 // Start server
