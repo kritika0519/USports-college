@@ -45,9 +45,16 @@ app.use((err, req, res, next) => {
   });
 });
 
-// 404 handler
+// 404 handler - Serve index.html for SPA routes
 app.use((req, res) => {
-  res.status(404).json({ message: 'Route not found' });
+  // If request is for API, return 404 JSON
+  if (req.path.startsWith('/api/')) {
+    return res.status(404).json({ message: 'Route not found' });
+  }
+  // For frontend routes, serve index.html (SPA fallback)
+  const path = require('path');
+  res.sendFile(path.join(__dirname, 'public/student/index.html'));
+});
 });
 
 // Start server

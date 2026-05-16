@@ -56,7 +56,7 @@ npm run dev
 - **Student Portal**: http://localhost:5000
 - **Admin Login**: http://localhost:5000/admin/login.html
 - **Admin Dashboard**: http://localhost:5000/admin/index.html
-- **API Endpoints**: http://localhost:5000/api/*
+- **API Endpoints**: http://localhost:5000/api/\*
 
 ### 4. Test Credentials
 
@@ -198,14 +198,14 @@ SINGLE EXPRESS SERVER (Port 5000)
 
 ## 📊 DEPLOYMENT COMPARISON
 
-| Factor | Before | After |
-| --- | --- | --- |
-| Servers | 3 (Backend, Frontend, Admin) | 1 (Backend serving all) |
-| Domains | 3 different URLs | 1 unified domain |
-| Setup | Complex deployment | Single deployment |
-| Cost | Higher | Lower |
-| Maintenance | Multiple services | Single service |
-| CORS Issues | Yes | No |
+| Factor      | Before                       | After                   |
+| ----------- | ---------------------------- | ----------------------- |
+| Servers     | 3 (Backend, Frontend, Admin) | 1 (Backend serving all) |
+| Domains     | 3 different URLs             | 1 unified domain        |
+| Setup       | Complex deployment           | Single deployment       |
+| Cost        | Higher                       | Lower                   |
+| Maintenance | Multiple services            | Single service          |
+| CORS Issues | Yes                          | No                      |
 
 ---
 
