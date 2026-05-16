@@ -18,6 +18,17 @@ app.use(express.json());
 // Serve static files (Frontend & Admin)
 app.use('/student', express.static('public/student'));
 app.use('/admin', express.static('public/admin'));
+
+// Admin SPA fallback
+app.get('/admin/*', (req, res) => {
+  const adminPath = path.join(__dirname, 'public/admin/index.html');
+  if (fs.existsSync(adminPath)) {
+    res.sendFile(adminPath);
+  } else {
+    res.status(404).json({ message: 'Admin page not found' });
+  }
+});
+
 app.use('/', express.static('public/student'));  // Default to student portal
 
 // Routes
@@ -49,8 +60,8 @@ app.use((err, req, res, next) => {
 
 // 404 handler - Serve index.html for SPA routes
 app.use((req, res) => {
-  // If request is for API, return 404 JSON
-  if (req.path.startsWith('/api/')) {
+  // If request is for API or admin, return 404 JSON
+  if (req.path.startsWith('/api/') || req.path.startsWith('/admin/')) {
     return res.status(404).json({ message: 'Route not found' });
   }
   // For frontend routes, serve index.html (SPA fallback)
