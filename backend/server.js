@@ -13,6 +13,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Serve static files (Frontend & Admin)
+app.use('/student', express.static('public/student'));
+app.use('/admin', express.static('public/admin'));
+app.use('/', express.static('public/student'));  // Default to student portal
+
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/bookings', bookingRoutes);

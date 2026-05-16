@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>USports Admin Panel</title>
+    <link rel="stylesheet" href="admin.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="admin-container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="logo">
+          <h2>USports Admin</h2>
+        </div>
+        <nav class="nav-menu">
+          <a href="#" class="nav-link active" data-section="dashboard">
+            <i class="fas fa-chart-line"></i> Dashboard
+          </a>
+          <a href="#" class="nav-link" data-section="facilities">
+            <i class="fas fa-dumbbell"></i> Facilities
+          </a>
+          <a href="#" class="nav-link" data-section="bookings">
+            <i class="fas fa-calendar-check"></i> Bookings
+          </a>
+          <a href="#" class="nav-link" data-section="users">
+            <i class="fas fa-users"></i> Users
+          </a>
+          <a href="#" class="nav-link" data-section="settings">
+            <i class="fas fa-cog"></i> Settings
+          </a>
+          <a href="#" id="logout" class="nav-link logout">
+            <i class="fas fa-sign-out-alt"></i> Logout
+          </a>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Top Bar -->
+        <div class="topbar">
+          <h1 id="section-title">Dashboard</h1>
+          <div class="user-info">
+            <span id="username">Admin</span>
+            <img src="https://via.placeholder.com/40" alt="Profile" />
+          </div>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content">
+          <!-- Dashboard Section -->
+          <section id="dashboard" class="section active">
+            <div class="dashboard-grid">
+              <div class="card">
+                <h3>Total Bookings</h3>
+                <p class="stat-number" id="total-bookings">0</p>
+                <small>This month</small>
+              </div>
+              <div class="card">
+                <h3>Active Users</h3>
+                <p class="stat-number" id="total-users">0</p>
+                <small>Registered students</small>
+              </div>
+              <div class="card">
+                <h3>Available Facilities</h3>
+                <p class="stat-number" id="total-facilities">0</p>
+                <small>Sports facilities</small>
+              </div>
+              <div class="card">
+                <h3>Revenue</h3>
+                <p class="stat-number">₹0</p>
+                <small>This month</small>
+              </div>
+            </div>
+          </section>
+
+          <!-- Facilities Section -->
+          <section id="facilities" class="section">
+            <div class="section-header">
+              <h2>Manage Facilities</h2>
+              <button class="btn btn-primary" id="add-facility-btn">
+                + Add Facility
+              </button>
+            </div>
+
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Facility Name</th>
+                  <th>Sport</th>
+                  <th>Quantity</th>
+                  <th>Operating Hours</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="facilities-table">
+                <tr>
+                  <td colspan="5" class="text-center">Loading facilities...</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <!-- Bookings Section -->
+          <section id="bookings" class="section">
+            <div class="section-header">
+              <h2>All Bookings</h2>
+              <input
+                type="date"
+                id="booking-filter-date"
+                class="filter-input"
+              />
+            </div>
+
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>User Name</th>
+                  <th>Sport</th>
+                  <th>Facility</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="bookings-table">
+                <tr>
+                  <td colspan="7" class="text-center">Loading bookings...</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <!-- Users Section -->
+          <section id="users" class="section">
+            <div class="section-header">
+              <h2>Registered Users</h2>
+            </div>
+
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Roll Number</th>
+                  <th>Role</th>
+                  <th>Joined</th>
+                </tr>
+              </thead>
+              <tbody id="users-table">
+                <tr>
+                  <td colspan="5" class="text-center">Loading users...</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <!-- Settings Section -->
+          <section id="settings" class="section">
+            <div class="settings-card">
+              <h2>College Settings</h2>
+              <form id="settings-form">
+                <div class="form-group">
+                  <label>College Name</label>
+                  <input
+                    type="text"
+                    id="college-name"
+                    placeholder="College Name"
+                    readonly
+                  />
+                </div>
+                <div class="form-group">
+                  <label>College ID</label>
+                  <input
+                    type="text"
+                    id="college-id"
+                    placeholder="College ID"
+                    readonly
+                  />
+                </div>
+                <div class="form-group">
+                  <label>Operating Start Hour</label>
+                  <input
+                    type="number"
+                    id="operating-start"
+                    min="0"
+                    max="23"
+                    value="9"
+                  />
+                </div>
+                <div class="form-group">
+                  <label>Operating End Hour</label>
+                  <input
+                    type="number"
+                    id="operating-end"
+                    min="0"
+                    max="23"
+                    value="18"
+                  />
+                </div>
+                <button type="submit" class="btn btn-primary">
+                  Save Settings
+                </button>
+              </form>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <!-- Add Facility Modal -->
+    <div id="facility-modal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Add New Facility</h2>
+        <form id="facility-form">
+          <div class="form-group">
+            <label>Facility Name</label>
+            <input
+              type="text"
+              id="facility-name"
+              placeholder="e.g., Tennis Court 1"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label>Sport Type</label>
+            <select id="facility-sport" required>
+              <option>Select Sport</option>
+              <option>Tennis</option>
+              <option>Table Tennis</option>
+              <option>Basketball</option>
+              <option>Badminton</option>
+              <option>Volleyball</option>
+              <option>Football</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Quantity</label>
+            <input
+              type="number"
+              id="facility-quantity"
+              min="1"
+              value="1"
+              required
+            />
+          </div>
+          <button type="submit" class="btn btn-primary">Add Facility</button>
+        </form>
+      </div>
+    </div>
+
+    <script src="admin.js"></script>
+  </body>
+</html>
