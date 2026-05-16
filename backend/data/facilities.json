@@ -1,0 +1,72 @@
+[
+  {
+    "id": "facility_001",
+    "name": "Tennis Court 1",
+    "sport": "Tennis",
+    "quantity": 1,
+    "college": "college_001"
+  },
+  {
+    "id": "facility_002",
+    "name": "Tennis Court 2",
+    "sport": "Tennis",
+    "quantity": 1,
+    "college": "college_001"
+  },
+  {
+    "id": "facility_003",
+    "name": "Table Tennis Table 1",
+    "sport": "Table Tennis",
+    "quantity": 1,
+    "college": "college_001"
+  },
+  {
+    "id": "facility_004",
+    "name": "Table Tennis Table 2",
+    "sport": "Table Tennis",
+    "quantity": 1,
+    "college": "college_001"
+  },
+  {
+    "id": "facility_005",
+    "name": "Table Tennis Table 3",
+    "sport": "Table Tennis",
+    "quantity": 1,
+    "college": "college_001"
+  },
+  {
+    "id": "facility_006",
+    "name": "Basketball Court",
+    "sport": "Basketball",
+    "quantity": 1,
+    "college": "college_001"
+  },
+  {
+    "id": "facility_007",
+    "name": "Badminton Court 1",
+    "sport": "Badminton",
+    "quantity": 1,
+    "college": "college_001"
+  },
+  {
+    "id": "facility_008",
+    "name": "Badminton Court 2",
+    "sport": "Badminton",
+    "quantity": 1,
+    "college": "college_001"
+  },
+  {
+    "id": "facility_009",
+    "name": "Volleyball Court",
+    "sport": "Volleyball",
+    "quantity": 1,
+    "college": "college_001"
+  },
+  {
+    "id": "facility_010",
+    "name": "Football Field",
+    "sport": "Football",
+    "quantity": 1,
+    "college": "college_001"
+  }
+]

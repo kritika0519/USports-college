@@ -1,0 +1,20 @@
+[
+  {
+    "id": "admin_001",
+    "name": "Admin",
+    "email": "admin@college.com",
+    "password": "admin123",
+    "rollNumber": "ADMIN001",
+    "role": "admin",
+    "college": "college_001"
+  },
+  {
+    "id": "student_001",
+    "name": "Test Student",
+    "email": "test@college.com",
+    "password": "test123",
+    "rollNumber": "STU001",
+    "role": "student",
+    "college": "college_001"
+  }
+]
