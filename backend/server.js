@@ -15,16 +15,19 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Serve static files (Frontend & Admin)
-app.use('/student', express.static('public/student'));
+// Serve static files (Admin first to avoid catch-all)
 app.use('/admin', express.static('public/admin'));
-
-app.use('/', express.static('public/student'));  // Default to student portal
+app.use('/student', express.static('public/student'));
 
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/facilities', facilityRoutes);
+
+// Default to student portal
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/student/index.html'));
+});
 
 // Initialize - file-based system ready
 app.post('/api/initialize', (req, res) => {
@@ -48,13 +51,13 @@ app.use((err, req, res, next) => {
   });
 });
 
-// 404 handler - Serve index.html for SPA routes
+// 404 handler - Serve student index.html for SPA routes (only for non-API, non-admin routes)
 app.use((req, res) => {
-  // If request is for API or admin, return 404 JSON
-  if (req.path.startsWith('/api/') || req.path.startsWith('/admin/')) {
+  // If request is for API, return 404 JSON
+  if (req.path.startsWith('/api/')) {
     return res.status(404).json({ message: 'Route not found' });
   }
-  // For frontend routes, serve index.html (SPA fallback)
+  // For other routes, serve student index.html (SPA fallback)
   const indexPath = path.join(__dirname, 'public/student/index.html');
   if (fs.existsSync(indexPath)) {
     res.sendFile(indexPath);
