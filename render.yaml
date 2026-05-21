@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: usports-backend
+    runtime: node
+    plan: free
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        value: your_super_secret_key_12345
+      - key: PORT
+        value: 3000
+    autoDeploy: true
+    healthCheckPath: /api/health

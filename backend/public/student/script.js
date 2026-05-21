@@ -1,5 +1,8 @@
-// Relative API URL - works on any domain (localhost or production)
-const API_URL = '/api';
+// API URL - defined in config.js or use default
+// const API_URL is loaded from config.js
+if (typeof API_URL === 'undefined') {
+  window.API_URL = 'http://localhost:5000/api';
+}
 
 const COLLEGE_ID = 'college_001';
 
