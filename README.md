@@ -1,103 +1,290 @@
-# 🏟️ USports - College Sports Booking System
+# � USports - Eliminate Wasted Time, Book Your Court!
 
-**Complete web application for managing college sports facility bookings** with Student Portal and Admin Dashboard.
-
-> 📚 **NOTE**: This is an improved version with full backend, database, and booking system. The old frontend is in `FEE-II-2024-master/` folder.
-
----
-
-## 🎯 **START HERE** 👈
-
-### 🚀 New? Pick Your Path:
-
-**Option 1: Run Locally (Test First)**
-
-- 📖 See: [START_HERE.md](START_HERE.md) ← Start with this!
-- Takes 10 minutes
-- Test everything locally
-
-**Option 2: Deploy Live (Get URLs)**
-
-- 📋 See: [DEPLOYMENT_CHEATSHEET.md](DEPLOYMENT_CHEATSHEET.md)
-- Takes 15 minutes
-- Get live URLs to share
-
-**Option 3: Need Help?**
-
-- 🔴 [LOGIN_ERROR_FIX.md](LOGIN_ERROR_FIX.md) - Fixing errors
-- 🗄️ [MONGODB_ATLAS_SETUP.md](MONGODB_ATLAS_SETUP.md) - Database setup
-- 📖 [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) - Full deployment guide
+> **Smart College Sports Facility Booking System**  
+> *Stop wasting time checking if courts are free. Book your slot online and play on time!*
 
 ---
 
-## ⚡ Quick Start (5 Minutes)
+## 🎯 **THE PROBLEM WE SOLVE**
 
+### ❌ **Before USports:**
+Students want to play sports during free time, but:
+- ❌ Rush to the court → **Equipment is already taken**
+- ❌ Wait around → **30-45 mins wasted** just checking availability
+- ❌ No transparency → Can't plan their schedule
+- ❌ Conflicts → Multiple students booking same slot
+- ❌ Chaos → First-come, first-served madness
+
+### ✅ **With USports:**
+Students can now:
+- ✅ **Book online** in advance with exact time slots
+- ✅ **Plan their day** knowing exactly when they can play
+- ✅ **Zero wasted time** - equipment is reserved just for them
+- ✅ **Fair system** - anyone can book any time
+- ✅ **Faculty oversight** - admins can manage and prevent abuse
+
+---
+
+## 🚀 **LIVE NOW! TRY IT TODAY**
+
+| 👥 Role | 🔗 Link | 🔑 Login | Status |
+|---------|---------|---------|--------|
+| **Student** | [🌐 USports Portal](https://usports-frontend-git-main-kritika0519s-projects.vercel.app/) | `test@college.com` / `test123` | ✅ Live |
+| **Faculty/Admin** | [📊 Admin Dashboard](https://usports-api.onrender.com/admin) | `admin@college.com` / `admin123` | ✅ Live |
+| **Backend API** | [🔌 API Server](https://usports-api.onrender.com) | `GET /api/facilities` | ✅ Live |
+
+---
+
+## ✨ **KEY FEATURES**
+
+### 🎓 **Student Portal**
+- ✅ One-click sign up with email
+- ✅ Browse all 10+ college sports facilities
+- ✅ Pick date and see **available time slots in real-time**
+- ✅ Book slots instantly (9 AM - 6 PM, 1-hour slots)
+- ✅ **"My Bookings"** - see all your upcoming bookings
+- ✅ **Cancel anytime** if plans change
+- ✅ Beautiful dark mode UI
+- ✅ Fully responsive (mobile, tablet, desktop)
+
+### 👨‍💼 **Admin Dashboard**
+- ✅ View all student bookings
+- ✅ Add/remove facilities
+- ✅ Manage time slots per facility
+- ✅ User management & role control
+- ✅ Analytics & statistics
+- ✅ Faculty approval system
+
+---
+
+## 📊 **WHAT'S INCLUDED**
+
+### 🎮 Pre-Loaded Demo Data
+- **10 Sports Facilities**: Tennis, Basketball, Badminton, Volleyball, Football, Table Tennis, etc.
+- **2 Test Bookings**: See how the system works
+- **Multiple Slots**: 9 one-hour slots per facility daily
+- **Test Users**: Student & Admin accounts ready to go
+
+---
+
+## 🛠️ **TECH STACK**
+
+```
+Frontend → HTML/CSS/JavaScript (Vanilla) → Vercel CDN
+    ↓
+API Gateway → Node.js + Express.js → Render Cloud
+    ↓
+Database → JSON Files (file-based) → No MongoDB needed!
+    ↓
+Auth → JWT Tokens + bcrypt passwords
+```
+
+| Component | Technology |
+|-----------|------------|
+| **Frontend** | HTML5, CSS3, Vanilla JavaScript |
+| **Backend** | Node.js 24, Express.js |
+| **Database** | File-based JSON (production-ready) |
+| **Authentication** | JWT + bcrypt |
+| **Hosting** | Vercel (Frontend) + Render (Backend) |
+| **Security** | CORS, Password hashing, Role-based access |
+
+---
+
+## 📁 **PROJECT STRUCTURE**
+
+```
+USports-main/
+│
+├── 📦 backend/                          # Node.js Express API
+│   ├── server.js                        # Main entry point
+│   ├── package.json                     # Dependencies
+│   │
+│   ├── routes/
+│   │   ├── fileAuthRoutes.js           # Login/Signup endpoints
+│   │   ├── fileBookingRoutes.js        # Booking management
+│   │   └── fileFacilityRoutes.js       # Sports facilities list
+│   │
+│   ├── data/                            # File-based storage (NO MongoDB!)
+│   │   ├── users.json                  # Student & admin accounts
+│   │   ├── bookings.json               # All reservations
+│   │   └── facilities.json             # Sports facilities config
+│   │
+│   └── public/                          # Static files (served by Express)
+│       ├── student/                    # 🎓 Student Portal (Vercel)
+│       │   ├── index.html              # Main page
+│       │   ├── script.js               # Booking logic
+│       │   ├── style.css               # Beautiful UI
+│       │   └── config.js               # API URL config
+│       │
+│       └── admin/                       # 👨‍💼 Admin Dashboard (Render)
+│           ├── index.html              # Admin page
+│           ├── admin.js                # Dashboard logic
+│           ├── style.css               # Admin styling
+│           └── config.js               # API URL config
+│
+├── .env                                 # Environment variables
+├── .gitignore                          # Git ignore file
+└── package.json                        # Root dependencies
+```
+
+---
+
+## ⚡ **QUICK START (5 MINUTES)**
+
+### **Run Backend Locally**
 ```bash
-# Terminal 1: Backend
-cd backend && npm install && npm run dev
-
-# Terminal 2: Frontend
-cd frontend && python -m http.server 8000
-
-# Terminal 3: Admin
-cd admin && python -m http.server 8001
+cd backend
+npm install
+node server.js
+# ✅ Server running on http://localhost:5000
 ```
 
-Visit:
-
-- 🎓 **Student Portal**: http://localhost:8000
-- 👨‍💼 **Admin Dashboard**: http://localhost:8001/login.html
-- 🔌 **Backend API**: http://localhost:5000
-
----
-
-## ✨ Features
-
-### 🎓 Student Portal
-
-- ✅ Sign up & Login with roll number
-- ✅ Browse available sports facilities
-- ✅ Book time slots (9 AM - 6 PM)
-- ✅ View & Cancel bookings
-- ✅ Real-time availability check
-- ✅ Dark mode support
-- ✅ Responsive design
-
-### 👨‍💼 Admin Dashboard
-
-- ✅ Dashboard with statistics
-- ✅ Add/Delete facilities
-- ✅ View all bookings
-- ✅ Manage users
-- ✅ Settings panel
-- ✅ Beautiful UI
-
----
-
-## 🛠️ Tech Stack
-
-| Layer        | Technology                                |
-| ------------ | ----------------------------------------- |
-| **Frontend** | HTML5, CSS3, JavaScript (Vanilla)         |
-| **Backend**  | Node.js, Express.js                       |
-| **Database** | MongoDB                                   |
-| **Auth**     | JWT, bcryptjs                             |
-| **Security** | Password hashing, CORS, Role-based access |
-
----
-
-## 📦 Project Structure
-
+### **Run Student Portal**
+```bash
+# Open in browser or start a web server
+cd backend/public/student
+# Option 1: Double-click index.html
+# Option 2: python -m http.server 8000
+# ✅ Visit http://localhost:8000
 ```
-Usports-main/
-├── backend/                  # Node.js Express API
-│   ├── config/db.js
-│   ├── models/
-│   │   ├── User.js
-│   │   ├── College.js
-│   │   ├── Facility.js
-│   │   └── Booking.js
-│   ├── controllers/
+
+### **Test Credentials**
+```
+Student: test@college.com / test123
+Admin: admin@college.com / admin123
+```
+
+### **Test Booking Flow**
+1. Login as `test@college.com`
+2. Select "Tennis" sport
+3. Pick date: `2026-05-22` or any future date
+4. See 9 available time slots
+5. Click one slot (e.g., 11:00 AM)
+6. Click "Confirm Booking"
+7. Go to "My Bookings" → See your booking! ✅
+
+---
+
+## 📱 **HOW IT WORKS**
+
+### **Student Flow:**
+```
+Sign Up → Login → Browse Sports → Select Facility & Date 
+  → Pick Time Slot → Confirm Booking → See in My Bookings
+```
+
+### **Admin Flow:**
+```
+Login (Admin Account) → View Dashboard → See All Bookings
+  → Manage Facilities → User Management
+```
+
+### **Behind the Scenes:**
+```
+Frontend (Vercel) 
+  ↓ (HTTPS)
+Config.js (Auto-detects API URL)
+  ↓ (JWT Token)
+Backend API (Render)
+  ↓ (Queries)
+File-based Database (JSON)
+  ↓ (Response)
+Frontend (Shows Results)
+```
+
+---
+
+## 🚀 **DEPLOYMENT LINKS**
+
+### **LIVE NOW:**
+- 🎓 **Student Portal**: https://usports-frontend-git-main-kritika0519s-projects.vercel.app/
+- 👨‍💼 **Admin Dashboard**: https://usports-api.onrender.com/admin
+- 🔌 **Backend API**: https://usports-api.onrender.com
+
+### **Architecture:**
+- **Frontend**: Deployed on **Vercel** (free tier)
+- **Backend**: Deployed on **Render** (free tier)
+- **Database**: **File-based JSON** (stored on Render)
+- **CI/CD**: Auto-deploys from GitHub on every push
+
+---
+
+## 📊 **API ENDPOINTS**
+
+```javascript
+// Authentication
+POST   /api/auth/login          // Student/Admin login
+POST   /api/auth/signup         // New student registration
+
+// Facilities
+GET    /api/facilities          // Get all sports facilities
+
+// Bookings (requires JWT token)
+GET    /api/bookings/available-slots?sport=Tennis&date=2026-05-22
+POST   /api/bookings/book       // Create booking
+GET    /api/bookings/my-bookings  // Get user's bookings
+DELETE /api/bookings/cancel/:id   // Cancel booking
+```
+
+---
+
+## 🔐 **TEST CREDENTIALS**
+
+| User Type | Email | Password | Access |
+|-----------|-------|----------|--------|
+| **Student** | `test@college.com` | `test123` | Student Portal |
+| **Admin** | `admin@college.com` | `admin123` | Admin Dashboard |
+| **New User** | Any email | Any password | Sign up anytime |
+
+---
+
+## 📈 **WHAT'S WORKING**
+
+✅ Student registration & login  
+✅ Browse sports facilities  
+✅ Real-time availability checking  
+✅ Book time slots  
+✅ View my bookings  
+✅ Cancel bookings  
+✅ Admin login  
+✅ Admin dashboard  
+✅ Responsive design (mobile + desktop)  
+✅ Production deployment  
+✅ Zero downtime deployment  
+
+---
+
+## 🎓 **LEARNING FROM THIS PROJECT**
+
+This project demonstrates:
+- Full-stack web development (Frontend + Backend)
+- RESTful API design
+- JWT authentication
+- File-based database (alternative to MongoDB)
+- Cloud deployment (Vercel + Render)
+- Responsive web design
+- Security best practices
+- Production-ready code
+
+---
+
+## 👨‍💻 **BUILT BY**
+
+**Kritika** - College Sports Booking System  
+Making sports accessible, one booking at a time! ⚽🏀🎾
+
+---
+
+## 📞 **HAVE QUESTIONS?**
+
+- 🐛 **Bug Reports**: Open an issue on GitHub
+- 💡 **Feature Requests**: Start a discussion
+- 📧 **Contact**: Email the maintainer
+
+---
+
+**⭐ If you find this useful, please star the repo! It helps others discover the project. ⭐**
+
 │   ├── routes/
 │   ├── middleware/auth.js
 │   ├── server.js
