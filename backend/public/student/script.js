@@ -213,35 +213,43 @@ async function loadAvailableSlots() {
     const response = await fetch(
       `${API_URL}/bookings/available-slots?sport=${selectedSport}&date=${date}&collegeId=${COLLEGE_ID}`
     );
-    const slots = await response.json();
+    const data = await response.json();
 
-    if (slots.length === 0) {
+    // API returns: { sport, date, availableSlots: {}, facilities: [] }
+    const { availableSlots, facilities } = data;
+
+    if (!availableSlots || Object.keys(availableSlots).length === 0) {
       document.getElementById('slots-container').innerHTML = '<p>No facilities available for this sport</p>';
       return;
     }
 
-    // Group by facility
-    const grouped = {};
-    slots.forEach(slot => {
-      const key = `${slot.facilityName} #${slot.facilityNumber}`;
-      if (!grouped[key]) grouped[key] = [];
-      grouped[key].push(slot);
-    });
-
     let html = '';
-    for (const facility in grouped) {
-      html += `<div class="facility-slots"><h4>${facility}</h4>`;
-      grouped[facility][0].slots.forEach(slot => {
-        const disabled = !slot.available;
+    
+    // For each facility
+    facilities.forEach(facility => {
+      const facilitySlots = availableSlots[facility.id];
+      if (!facilitySlots) return;
+
+      html += `<div class="facility-slots"><h4>${facility.name}</h4><div class="time-slots">`;
+      
+      // For each time slot (9-10, 10-11, etc.)
+      Object.entries(facilitySlots).forEach(([slotKey, status]) => {
+        const times = slotKey.split('-');
+        const startTime = parseInt(times[0]);
+        const endTime = parseInt(times[1]);
+        const disabled = status === 'booked';
+        
         html += `
-          <button class="slot-btn" ${disabled ? 'disabled' : ''} 
-                  onclick="selectSlot(this, '${grouped[facility][0].facilityId}', '${slot.startTime}', '${slot.endTime}', '${facility}')">
-            ${slot.label} ${disabled ? '❌' : '✓'}
+          <button class="slot-btn ${disabled ? 'disabled' : ''}" ${disabled ? 'disabled' : ''} 
+                  onclick="selectSlot(this, '${facility.id}', ${startTime}, ${endTime}, '${facility.name}')">
+            ${startTime}:00 - ${endTime}:00 ${disabled ? '❌' : '✓'}
           </button>
         `;
       });
-      html += '</div>';
-    }
+      
+      html += '</div></div>';
+    });
+    
     document.getElementById('slots-container').innerHTML = html;
   } catch (error) {
     document.getElementById('slots-container').innerHTML = '<p>Error loading slots</p>';
@@ -291,7 +299,7 @@ async function confirmBooking() {
         Authorization: `Bearer ${token}`
       },
       body: JSON.stringify({
-        facilityId: selectedSlot.facilityId,
+        facility: selectedSlot.facilityId,
         date: document.getElementById('booking-date').value,
         startTime: selectedSlot.startTime,
         endTime: selectedSlot.endTime,
@@ -310,8 +318,13 @@ async function confirmBooking() {
       selectedSport = null;
       document.getElementById('booking-date').value = '';
       document.getElementById('slots-container').innerHTML = '';
-      Object.keys(document.querySelectorAll('#summary-*')).forEach(key => {
-        document.getElementById(key).textContent = '-';
+      document.querySelectorAll('.booking-summary p').forEach(p => {
+        const strong = p.querySelector('strong');
+        if (strong) {
+          p.textContent = '';
+          p.appendChild(strong);
+          p.appendChild(document.createTextNode(' -'));
+        }
       });
       loadMyBookings();
     } else {
@@ -344,10 +357,11 @@ async function loadMyBookings() {
     let html = '';
     bookings.forEach(booking => {
       const date = new Date(booking.date).toLocaleDateString();
+      const facilityName = booking.facilityDetails?.name || booking.facility || 'Unknown';
       html += `
         <div class="booking-card">
           <h3>${booking.sport}</h3>
-          <p><strong>Facility:</strong> ${booking.facility.name}</p>
+          <p><strong>Facility:</strong> ${facilityName}</p>
           <p><strong>Date:</strong> ${date}</p>
           <p><strong>Time:</strong> ${booking.startTime}:00 - ${booking.endTime}:00</p>
           <span class="badge ${booking.status}">${booking.status}</span>

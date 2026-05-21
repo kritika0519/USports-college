@@ -1,1 +1,38 @@
-[]
+[
+  {
+    "id": "booking_1779368999339_yuht4iq1d",
+    "user": "student_001",
+    "facility": "facility_001",
+    "sport": "Tennis",
+    "date": "2026-05-22T00:00:00.000Z",
+    "startTime": 11,
+    "endTime": 12,
+    "facilityNumber": 1,
+    "status": "confirmed",
+    "createdAt": "2026-05-21T13:09:59.339Z"
+  },
+  {
+    "id": "booking_1779369128292_jvvmbgokb",
+    "user": "student_001",
+    "facility": "facility_006",
+    "sport": "Basketball",
+    "date": "2026-05-23T00:00:00.000Z",
+    "startTime": 14,
+    "endTime": 15,
+    "facilityNumber": 1,
+    "status": "confirmed",
+    "createdAt": "2026-05-21T13:12:08.292Z"
+  },
+  {
+    "id": "booking_1779369351795_8zmpwxpu1",
+    "user": "student_001",
+    "facility": "facility_002",
+    "sport": "Tennis",
+    "date": "2026-05-22T00:00:00.000Z",
+    "startTime": 10,
+    "endTime": 11,
+    "facilityNumber": 1,
+    "status": "confirmed",
+    "createdAt": "2026-05-21T13:15:51.795Z"
+  }
+]
