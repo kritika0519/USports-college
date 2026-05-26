@@ -34,5 +34,17 @@
     "facilityNumber": 1,
     "status": "confirmed",
     "createdAt": "2026-05-21T13:15:51.795Z"
+  },
+  {
+    "id": "booking_1779790155671_ytm8llo74",
+    "user": "user_1779790142940_gwvdc6olo",
+    "facility": "facility_003",
+    "sport": "Table Tennis",
+    "date": "2026-05-26T00:00:00.000Z",
+    "startTime": 9,
+    "endTime": 10,
+    "facilityNumber": 1,
+    "status": "cancelled",
+    "createdAt": "2026-05-26T10:09:15.671Z"
   }
 ]

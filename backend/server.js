@@ -3,81 +3,116 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
+const { connectDatabase, isMongoReady } = require('./config/db');
+const seedMongoIfNeeded = require('./config/seedMongo');
 
-// File-based routes (no MongoDB!)
 const authRoutes = require('./routes/fileAuthRoutes');
 const bookingRoutes = require('./routes/fileBookingRoutes');
 const facilityRoutes = require('./routes/fileFacilityRoutes');
 
 const app = express();
 
-// Middleware
-app.use(cors());
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://127.0.0.1:5173',
+  'https://usports-frontend.vercel.app',
+  'https://usports-frontend-git-main-kritika0519s-projects.vercel.app'
+];
+
+app.use(cors({
+  origin(origin, callback) {
+    const isLocalDev = /^http:\/\/(localhost|127\.0\.0\.1):\d+$/.test(origin || '');
+
+    if (!origin || isLocalDev || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+
+    return callback(new Error('Not allowed by CORS'));
+  }
+}));
 app.use(express.json());
 
-// Serve static files (Admin first to avoid catch-all)
+const frontendDist = path.join(__dirname, '../frontend/dist');
+
+if (fs.existsSync(frontendDist)) {
+  app.use(express.static(frontendDist));
+}
+
 app.use('/admin', express.static('public/admin'));
 app.use('/student', express.static('public/student'));
 
-// Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/facilities', facilityRoutes);
 
-// Default to student portal
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public/student/index.html'));
+  const reactIndex = path.join(frontendDist, 'index.html');
+  res.sendFile(fs.existsSync(reactIndex) ? reactIndex : path.join(__dirname, 'public/student/index.html'));
 });
 
-// Initialize - file-based system ready
 app.post('/api/initialize', (req, res) => {
   res.json({
-    message: 'System ready - using file-based storage',
-    college: { collegeId: 'college_001', name: 'ABC Engineering College' }
+    message: isMongoReady() ? 'System ready - using MongoDB Atlas' : 'System ready - using file-based storage',
+    college: { collegeId: process.env.COLLEGE_ID || 'college_001', name: process.env.COLLEGE_NAME || 'ABC Engineering College' }
   });
 });
 
-// Health check
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'Server is running' });
+  res.json({
+    status: 'Server is running',
+    database: isMongoReady() ? 'mongodb' : 'json'
+  });
 });
 
-// Error handling
 app.use((err, req, res, next) => {
   console.error('Error:', err);
-  res.status(err.status || 500).json({ 
+  res.status(err.status || 500).json({
     message: err.message || 'Server error',
-    error: process.env.NODE_ENV === 'production' ? {} : err 
+    error: process.env.NODE_ENV === 'production' ? {} : err
   });
 });
 
-// 404 handler - Serve student index.html for SPA routes (only for non-API, non-admin routes)
 app.use((req, res) => {
-  // If request is for API, return 404 JSON
   if (req.path.startsWith('/api/')) {
     return res.status(404).json({ message: 'Route not found' });
   }
-  // For other routes, serve student index.html (SPA fallback)
-  const indexPath = path.join(__dirname, 'public/student/index.html');
-  if (fs.existsSync(indexPath)) {
-    res.sendFile(indexPath);
-  } else {
-    res.status(404).json({ message: 'Page not found' });
+
+  const reactIndex = path.join(frontendDist, 'index.html');
+  const legacyIndex = path.join(__dirname, 'public/student/index.html');
+
+  if (fs.existsSync(reactIndex)) {
+    return res.sendFile(reactIndex);
   }
+
+  if (fs.existsSync(legacyIndex)) {
+    return res.sendFile(legacyIndex);
+  }
+
+  res.status(404).json({ message: 'Page not found' });
 });
 
-// Start server
 const PORT = process.env.PORT || 5000;
-const server = app.listen(PORT, () => {
-  console.log(`✅ Server running on port ${PORT}`);
-  console.log(`📡 API: http://localhost:${PORT}`);
-  console.log('🚀 Using file-based storage (no MongoDB needed!)');
-});
+let server;
 
-// Graceful shutdown
+async function startServer() {
+  const connected = await connectDatabase();
+
+  if (connected) {
+    await seedMongoIfNeeded();
+  }
+
+  server = app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+    console.log(`API: http://localhost:${PORT}`);
+    console.log(`Storage: ${isMongoReady() ? 'MongoDB Atlas' : 'JSON files'}`);
+  });
+}
+
+startServer();
+
 process.on('SIGTERM', () => {
   console.log('SIGTERM received, shutting down gracefully');
-  server.close(() => {
+  server?.close(() => {
     console.log('Server closed');
   });
 });

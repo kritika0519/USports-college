@@ -3,15 +3,15 @@ const router = express.Router();
 const fs = require('fs');
 const path = require('path');
 const jwt = require('jsonwebtoken');
+const { isMongoReady } = require('../config/db');
+const Facility = require('../models/Facility');
 
 const facilitiesFile = path.join(__dirname, '../data/facilities.json');
 
-// Helper functions
 function readFacilities() {
   try {
-    const data = fs.readFileSync(facilitiesFile, 'utf8');
-    return JSON.parse(data);
-  } catch (error) {
+    return JSON.parse(fs.readFileSync(facilitiesFile, 'utf8'));
+  } catch {
     return [];
   }
 }
@@ -21,10 +21,19 @@ function writeFacilities(facilities) {
 }
 
 function generateId() {
-  return 'facility_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+  return 'facility_' + Date.now() + '_' + Math.random().toString(36).slice(2, 11);
 }
 
-// Middleware to verify token
+function publicFacility(facility) {
+  return {
+    id: facility.id || facility._id?.toString(),
+    name: facility.name,
+    sport: facility.sport,
+    quantity: facility.quantity || 1,
+    college: facility.college
+  };
+}
+
 function verifyToken(req, res, next) {
   const token = req.headers.authorization?.split(' ')[1];
   if (!token) {
@@ -36,23 +45,28 @@ function verifyToken(req, res, next) {
     req.userId = decoded.userId;
     req.role = decoded.role;
     next();
-  } catch (error) {
+  } catch {
     res.status(401).json({ message: 'Invalid token' });
   }
 }
 
-// Get all facilities
-router.get('/all', (req, res) => {
+async function getAllFacilities(req, res) {
   try {
-    const facilities = readFacilities();
-    res.json(facilities);
+    if (isMongoReady()) {
+      const facilities = await Facility.find({ active: true }).sort({ sport: 1, name: 1 });
+      return res.json(facilities.map(publicFacility));
+    }
+
+    res.json(readFacilities());
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
-});
+}
 
-// Add facility (admin)
-router.post('/add', verifyToken, (req, res) => {
+router.get('/', getAllFacilities);
+router.get('/all', getAllFacilities);
+
+router.post('/add', verifyToken, async (req, res) => {
   try {
     if (req.role !== 'admin') {
       return res.status(403).json({ message: 'Admin only' });
@@ -64,43 +78,66 @@ router.post('/add', verifyToken, (req, res) => {
       return res.status(400).json({ message: 'All fields required' });
     }
 
-    const facilities = readFacilities();
+    if (isMongoReady()) {
+      const facility = await Facility.create({
+        name,
+        sport,
+        quantity,
+        college: process.env.COLLEGE_ID || 'college_001'
+      });
 
+      return res.status(201).json({
+        message: 'Facility added',
+        facility: publicFacility(facility)
+      });
+    }
+
+    const facilities = readFacilities();
     const newFacility = {
       id: generateId(),
       name,
       sport,
       quantity,
-      college: 'college_001'
+      college: process.env.COLLEGE_ID || 'college_001'
     };
 
     facilities.push(newFacility);
     writeFacilities(facilities);
 
-    res.status(201).json({
-      message: 'Facility added',
-      facility: newFacility
-    });
+    res.status(201).json({ message: 'Facility added', facility: newFacility });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 });
 
-// Delete facility (admin)
-router.delete('/:id', verifyToken, (req, res) => {
+router.delete('/:id', verifyToken, async (req, res) => {
   try {
     if (req.role !== 'admin') {
       return res.status(403).json({ message: 'Admin only' });
     }
 
+    if (isMongoReady()) {
+      const facility = await Facility.findByIdAndUpdate(
+        req.params.id,
+        { active: false },
+        { new: true }
+      );
+
+      if (!facility) {
+        return res.status(404).json({ message: 'Facility not found' });
+      }
+
+      return res.json({ message: 'Facility deleted', facility: publicFacility(facility) });
+    }
+
     let facilities = readFacilities();
-    const facility = facilities.find(f => f.id === req.params.id);
+    const facility = facilities.find((item) => item.id === req.params.id);
 
     if (!facility) {
       return res.status(404).json({ message: 'Facility not found' });
     }
 
-    facilities = facilities.filter(f => f.id !== req.params.id);
+    facilities = facilities.filter((item) => item.id !== req.params.id);
     writeFacilities(facilities);
 
     res.json({ message: 'Facility deleted', facility });

@@ -3,7 +3,7 @@
     "id": "admin_001",
     "name": "Admin",
     "email": "admin@college.com",
-    "password": "admin123",
+    "password": "$2a$10$ee2IgonokgHW2wPGwUQII.FVgH5e7jJIG8UzOju.hztnwhyRnWYTK",
     "rollNumber": "ADMIN001",
     "role": "admin",
     "college": "college_001"
@@ -12,8 +12,17 @@
     "id": "student_001",
     "name": "Test Student",
     "email": "test@college.com",
-    "password": "test123",
+    "password": "$2a$10$0jHGlVkXSEDDzxhGOLb1/.8bUxhXF.ciECOlCmwMuTWnHClYNnT8q",
     "rollNumber": "STU001",
+    "role": "student",
+    "college": "college_001"
+  },
+  {
+    "id": "user_1779790142940_gwvdc6olo",
+    "name": "Kritika  Aggarwal",
+    "email": "kritika1878.be23@chitkara.edu.in",
+    "password": "kritika1905",
+    "rollNumber": "2310991878",
     "role": "student",
     "college": "college_001"
   }
