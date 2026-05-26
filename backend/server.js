@@ -60,17 +60,9 @@ app.use((err, req, res, next) => {
   });
 });
 
+// All non-API routes should return 404 since backend is API-only
 app.use((req, res) => {
-  if (req.path.startsWith('/api/')) {
-    return res.status(404).json({ message: 'Route not found' });
-  }
-
-  const reactIndex = path.join(frontendDist, 'index.html');
-  if (fs.existsSync(reactIndex)) {
-    return res.sendFile(reactIndex);
-  }
-
-  res.status(404).json({ message: 'Page not found' });
+  res.status(404).json({ message: 'API endpoint not found' });
 });
 
 const PORT = process.env.PORT || 5000;
