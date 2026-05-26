@@ -5,7 +5,7 @@ const fallbackApi = isLocalhost
   ? isBackendHost
     ? `${window.location.origin}/api`
     : 'http://localhost:5000/api'
-  : 'https://usports-api.onrender.com/api';
+  : 'https://usports-college-1.onrender.com/api';
 
 export const API_URL = import.meta.env.VITE_API_URL || fallbackApi;
 
