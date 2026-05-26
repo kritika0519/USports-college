@@ -33,24 +33,10 @@ app.use(cors({
 }));
 app.use(express.json());
 
-const frontendDist = path.join(__dirname, '../frontend/dist');
-
-if (fs.existsSync(frontendDist)) {
-  app.use(express.static(frontendDist));
-}
-
+// Frontend is hosted on Vercel - Backend is API only
 app.use('/api/auth', authRoutes);
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/facilities', facilityRoutes);
-
-app.get('/', (req, res) => {
-  const reactIndex = path.join(frontendDist, 'index.html');
-  if (fs.existsSync(reactIndex)) {
-    return res.sendFile(reactIndex);
-  }
-
-  res.status(404).json({ message: 'Frontend build not found. Run npm run build in frontend first.' });
-});
 
 app.post('/api/initialize', (req, res) => {
   res.json({
