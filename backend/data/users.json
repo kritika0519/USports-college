@@ -18,11 +18,11 @@
     "college": "college_001"
   },
   {
-    "id": "user_1779790142940_gwvdc6olo",
-    "name": "Kritika  Aggarwal",
-    "email": "kritika1878.be23@chitkara.edu.in",
-    "password": "kritika1905",
-    "rollNumber": "2310991878",
+    "id": "user_1779803031841_nczil5rhh",
+    "name": "aman",
+    "email": "aman@gmail.com",
+    "password": "$2a$10$/ZUWQd5ZAFts7MBMq/V5SuwDgLNYfpltSDtI1m9XGk8jTqI8VsSti",
+    "rollNumber": "345678",
     "role": "student",
     "college": "college_001"
   }

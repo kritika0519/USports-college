@@ -38,16 +38,17 @@ if (fs.existsSync(frontendDist)) {
   app.use(express.static(frontendDist));
 }
 
-app.use('/admin', express.static('public/admin'));
-app.use('/student', express.static('public/student'));
-
 app.use('/api/auth', authRoutes);
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/facilities', facilityRoutes);
 
 app.get('/', (req, res) => {
   const reactIndex = path.join(frontendDist, 'index.html');
-  res.sendFile(fs.existsSync(reactIndex) ? reactIndex : path.join(__dirname, 'public/student/index.html'));
+  if (fs.existsSync(reactIndex)) {
+    return res.sendFile(reactIndex);
+  }
+
+  res.status(404).json({ message: 'Frontend build not found. Run npm run build in frontend first.' });
 });
 
 app.post('/api/initialize', (req, res) => {
@@ -78,14 +79,8 @@ app.use((req, res) => {
   }
 
   const reactIndex = path.join(frontendDist, 'index.html');
-  const legacyIndex = path.join(__dirname, 'public/student/index.html');
-
   if (fs.existsSync(reactIndex)) {
     return res.sendFile(reactIndex);
-  }
-
-  if (fs.existsSync(legacyIndex)) {
-    return res.sendFile(legacyIndex);
   }
 
   res.status(404).json({ message: 'Page not found' });
