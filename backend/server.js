@@ -16,7 +16,8 @@ const allowedOrigins = [
   'http://localhost:5173',
   'http://127.0.0.1:5173',
   'https://usports-frontend.vercel.app',
-  'https://usports-frontend-git-main-kritika0519s-projects.vercel.app'
+  'https://usports-frontend-git-main-kritika0519s-projects.vercel.app',
+  'https://u-sports-college.vercel.app'
 ];
 
 app.use(cors({
