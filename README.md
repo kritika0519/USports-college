@@ -32,12 +32,14 @@
 - ✅ Create and maintain their sports profile
 
 **Admin Features:**
+
 - 📊 Dashboard with booking analytics
 - 👥 User management
 - ⚽ Facility management
 - 📅 Booking oversight and cancellation
 
 **Live URLs:**
+
 - Frontend: https://u-sports-college.vercel.app
 - Admin: https://u-sports-college.vercel.app/admin
 - API: https://usports-college-1.onrender.com/api
@@ -47,7 +49,9 @@
 ## 💡 Why This Project?
 
 ### **Problem Statement:**
+
 Universities struggle with:
+
 - 🚨 No centralized sports facility booking system
 - 🚨 Manual booking through WhatsApp/calls (inefficient)
 - 🚨 Double bookings and conflicts
@@ -55,7 +59,9 @@ Universities struggle with:
 - 🚨 Difficulty tracking facility usage
 
 ### **Solution:**
+
 USports provides a **digital-first booking platform** that:
+
 - Eliminates manual coordination
 - Prevents double bookings in real-time
 - Provides instant availability visibility
@@ -63,6 +69,7 @@ USports provides a **digital-first booking platform** that:
 - Improves student engagement with campus sports
 
 ### **Business Impact:**
+
 - Increases facility utilization by 40-50%
 - Reduces administrative overhead
 - Enhances student experience
@@ -73,6 +80,7 @@ USports provides a **digital-first booking platform** that:
 ## 🛠 Tech Stack
 
 ### **Frontend**
+
 ```
 React 18           - UI library & component-based architecture
 Vite              - Lightning-fast build tool & dev server
@@ -81,6 +89,7 @@ Vercel            - Production deployment platform
 ```
 
 ### **Backend**
+
 ```
 Node.js (24.x)    - JavaScript runtime
 Express.js (4.x)  - Web application framework
@@ -90,12 +99,14 @@ CORS              - Cross-Origin Resource Sharing
 ```
 
 ### **Database**
+
 ```
 MongoDB Atlas     - Primary: Cloud NoSQL database
 JSON Files        - Fallback: File-based storage (offline support)
 ```
 
 ### **Deployment**
+
 ```
 Render            - Backend API hosting (Node.js)
 Vercel            - Frontend hosting (React SPA)
@@ -103,6 +114,7 @@ GitHub            - Version control & CI/CD trigger
 ```
 
 ### **Security**
+
 ```
 JWT (24-hour expiration)     - Stateless authentication
 bcryptjs (10 salt rounds)    - Password hashing
@@ -159,6 +171,7 @@ Environment variables       - Sensitive data protection
 ### **Component Interaction:**
 
 **Student Signup/Login → Booking → Admin View** (Complete Flow)
+
 1. Frontend (Vercel) sends login request
 2. Backend (Render) authenticates via JWT
 3. MongoDB stores/retrieves user data
@@ -172,6 +185,7 @@ Environment variables       - Sensitive data protection
 ## ✨ Features
 
 ### **Student Features:**
+
 - 📝 **User Registration & Authentication** - Secure signup with JWT
 - 🏃 **Facility Discovery** - Browse 10+ sports with real-time availability
 - 📅 **Smart Booking System** - Real-time slot picker (9 AM - 6 PM)
@@ -179,12 +193,14 @@ Environment variables       - Sensitive data protection
 - 🔔 **Notifications** - Real-time toast alerts
 
 ### **Admin Features:**
+
 - 📊 **Dashboard Overview** - Booking stats & analytics
 - 📅 **Booking Management** - View & cancel student bookings
 - ⚽ **Facility Management** - Add/edit sports facilities
 - 👥 **User Management** - View all registered students
 
 ### **Technical Features:**
+
 - 🌙 **Dark Mode** - Light/Dark theme toggle
 - 🔒 **Security** - JWT + bcryptjs + CORS
 - 📱 **Responsive Design** - Mobile-first approach
@@ -195,6 +211,7 @@ Environment variables       - Sensitive data protection
 ## 🚀 Installation & Setup
 
 ### **Prerequisites:**
+
 ```
 - Node.js 20+
 - Git
@@ -202,6 +219,7 @@ Environment variables       - Sensitive data protection
 ```
 
 ### **Backend Setup:**
+
 ```bash
 git clone https://github.com/kritika0519/USports-college.git
 cd backend
@@ -223,6 +241,7 @@ npm start
 ```
 
 ### **Frontend Setup:**
+
 ```bash
 cd ../frontend
 
@@ -239,18 +258,20 @@ npm run dev
 ## 🌍 Deployment
 
 ### **Vercel (Frontend)**
+
 ```json
 {
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
-  ]
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }
 ```
+
 **Environment:** `VITE_API_URL=https://usports-college-1.onrender.com/api`  
 **URL:** https://u-sports-college.vercel.app
 
 ### **Render (Backend)**
+
 **Environment Variables:**
+
 ```
 MONGODB_URI=mongodb+srv://...
 JWT_SECRET=...
@@ -260,9 +281,11 @@ COLLEGE_NAME=ABC Engineering College
 DB_NAME=USports
 NODE_ENV=production
 ```
+
 **URL:** https://usports-college-1.onrender.com
 
 ### **Auto-Deploy Pipeline:**
+
 1. Push code to GitHub main branch
 2. Vercel auto-deploys frontend
 3. Render auto-deploys backend
@@ -275,6 +298,7 @@ NODE_ENV=production
 **Base URL:** https://usports-college-1.onrender.com/api
 
 **Auth Routes:**
+
 - `POST /auth/register` - User signup
 - `POST /auth/login` - User login
 - `GET /auth/users` - List all users (admin only)
@@ -282,6 +306,7 @@ NODE_ENV=production
 - `POST /auth/change-password` - Change password
 
 **Booking Routes:**
+
 - `GET /bookings/available-slots?sport=Tennis&date=2024-05-26` - Check slots
 - `POST /bookings/book` - Create booking
 - `GET /bookings/my-bookings` - Get user's bookings
@@ -289,12 +314,14 @@ NODE_ENV=production
 - `DELETE /bookings/cancel/:id` - Cancel booking
 
 **Facility Routes:**
+
 - `GET /facilities/all` - Get all facilities
 - `POST /facilities/add` - Add facility (admin)
 - `GET /facilities/:id` - Get facility details
 - `DELETE /facilities/:id` - Delete facility (admin)
 
 **Health Check:**
+
 - `GET /health` - Server status + DB type
 
 ---
@@ -302,6 +329,7 @@ NODE_ENV=production
 ## 🗄 Database Schema
 
 **Users:**
+
 ```javascript
 {
   id: String,
@@ -318,6 +346,7 @@ NODE_ENV=production
 ```
 
 **Bookings:**
+
 ```javascript
 {
   id: String,
@@ -332,6 +361,7 @@ NODE_ENV=production
 ```
 
 **Facilities:**
+
 ```javascript
 {
   id: String,
@@ -387,6 +417,7 @@ USports-college/
 ## 🔄 How It Works
 
 **Request Flow:**
+
 ```
 1. User clicks "Book" → Form submission
 2. Frontend validates data + adds JWT token
@@ -412,12 +443,12 @@ USports-college/
 
 ## 📊 Performance
 
-| Metric | Value |
-|--------|-------|
-| Build Size | ~220 KB |
-| API Response | 50-150 ms |
-| Page Load | < 2 seconds |
-| Concurrent Users | 1000+ |
+| Metric           | Value       |
+| ---------------- | ----------- |
+| Build Size       | ~220 KB     |
+| API Response     | 50-150 ms   |
+| Page Load        | < 2 seconds |
+| Concurrent Users | 1000+       |
 
 ---
 
@@ -437,22 +468,28 @@ USports-college/
 ## 🎓 For Presentation / PPT
 
 ### **Slide 1: Overview**
+
 Problem: Manual sports booking is inefficient → Solution: Digital platform with real-time availability
 
 ### **Slide 2: Tech Stack**
+
 React + Vite (Frontend) → Node.js + Express (Backend) → MongoDB (Database) → Vercel + Render (Deployment)
 
 ### **Slide 3: Architecture Diagram**
+
 [Show the system architecture above]
 
 ### **Slide 4: Key Features**
+
 - Student: Browse → Book → Manage
 - Admin: Dashboard → Users → Bookings → Facilities
 
 ### **Slide 5: Deployment**
+
 GitHub push → Auto-deploy to Vercel + Render → Live in 1-2 minutes
 
 ### **Slide 6: Results**
+
 ✅ 10+ bookable facilities  
 ✅ Real-time availability  
 ✅ 100+ potential users  
@@ -463,18 +500,21 @@ GitHub push → Auto-deploy to Vercel + Render → Live in 1-2 minutes
 ## 📚 Quick Reference
 
 **Live URLs:**
+
 - Frontend: https://u-sports-college.vercel.app
 - Admin: https://u-sports-college.vercel.app/admin
 - API: https://usports-college-1.onrender.com/api
 
 **Test Account:**
+
 ```
 Email: admin@college.com
 Role: admin
-(Check .env for password)
+If you need admin access for testing, please create an account via the signup flow or request credentials from the project owner.
 ```
 
 **Quick Commands:**
+
 ```bash
 npm start              # Backend
 npm run dev            # Frontend
@@ -485,4 +525,3 @@ git push origin main   # Deploy
 ---
 
 **Version:** 1.0.0 | **Status:** Production Ready ✅ | **Last Updated:** May 26, 2026
-
