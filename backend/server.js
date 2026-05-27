@@ -17,7 +17,8 @@ const allowedOrigins = [
   'http://127.0.0.1:5173',
   'https://usports-frontend.vercel.app',
   'https://usports-frontend-git-main-kritika0519s-projects.vercel.app',
-  'https://u-sports-college.vercel.app'
+  'https://u-sports-college.vercel.app',
+  'https://usports-college-frontend.s3-website-us-east-1.amazonaws.com'
 ];
 
 app.use(cors({
