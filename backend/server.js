@@ -18,6 +18,7 @@ const allowedOrigins = [
   'https://usports-frontend.vercel.app',
   'https://usports-frontend-git-main-kritika0519s-projects.vercel.app',
   'https://u-sports-college.vercel.app',
+  'http://usports-college-frontend.s3-website-us-east-1.amazonaws.com',
   'https://usports-college-frontend.s3-website-us-east-1.amazonaws.com'
 ];
 
